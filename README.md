@@ -6,7 +6,7 @@ MealPlanner AI is a Streamlit web app that suggests recipes based on your mood, 
 
 ## Problem Statement
 
-Deciding what to cook with limited ingredients, tools, and time is a small but recurring source of friction, and it often ends in food waste or a takeout order. MealPlanner AI removes that friction by turning what you already have into concrete, feasible recipe ideas and step-by-step instructions, so you don't need to search recipes online and hope they match your pantry.
+Many people struggle to decide what to cook using the ingredients, equipment, and time they have available. Existing recipe platforms require users to search through countless recipes, many of which are impractical or require additional ingredients. This often results in decision fatigue, wasted food, and increased reliance on takeout. MealPlanner AI addresses this problem by generating personalized recipes based on the user's available ingredients, kitchen tools, and time constraints, making home cooking simpler, faster, and more sustainable.
 
 ## Technology Stack
 

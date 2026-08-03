@@ -28,3 +28,13 @@ jobs:
 
       - name: Verify all modules import cleanly
         run: python -c "import app, analyzer, llm, parse, prompts, main"
+
+  smoke-check:
+    needs: lint-and-check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check deployed app is reachable
+        run: |
+          curl --fail --silent --show-error --retry 5 --retry-delay 15 --retry-all-errors \
+            https://mealplanner-ai.streamlit.app/ -o /dev/null

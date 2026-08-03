@@ -4,6 +4,8 @@
 
 MealPlanner AI is a Streamlit web app that suggests recipes based on your mood, the ingredients and tools you have on hand, and how much time you've got. It's for anyone standing in front of their fridge who doesn't know what to cook with what's already there.
 
+**Live app:** https://mealplanner-ai.streamlit.app/
+
 ## Problem Statement
 
 Many people struggle to decide what to cook using the ingredients, equipment, and time they have available. Existing recipe platforms require users to search through countless recipes, many of which are impractical or require additional ingredients. This often results in decision fatigue, wasted food, and increased reliance on takeout. MealPlanner AI addresses this problem by generating personalized recipes based on the user's available ingredients, kitchen tools, and time constraints, making home cooking simpler, faster, and more sustainable.
@@ -57,9 +59,9 @@ Python, Streamlit, google-genai, python-dotenv, Google Gemini API (`gemini-flash
 
 ## CI/CD
 
-Every push and pull request to `main` runs the GitHub Actions workflow in `.github/workflows/ci.yml`, which lints the code and verifies all modules import cleanly.
+Every push and pull request to `main` runs the GitHub Actions workflow in `.github/workflows/ci.yml`, which lints the code and verifies all modules import cleanly. On pushes to `main`, a second job then does a smoke check — it curls the live app to confirm it's reachable (Streamlit Community Cloud handles the actual redeploy itself, so this is a health check, not a deploy trigger).
 
-The app is deployed via [Streamlit Community Cloud](https://share.streamlit.io), which auto-redeploys on every push to `main`:
+The app is deployed via [Streamlit Community Cloud](https://share.streamlit.io) at **https://mealplanner-ai.streamlit.app/**, which auto-redeploys on every push to `main`:
 
 1. Sign in to share.streamlit.io with GitHub.
 2. Click "New app", select this repository, branch `main`, and main file `app.py`.

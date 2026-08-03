@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/teckchenglee/MealPlanner-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/teckchenglee/MealPlanner-AI/actions/workflows/ci.yml)
 
-MealPlanner AI is a Streamlit web app that suggests recipes based on your mood, the ingredients and tools you have on hand, and how much time you've got. It's for anyone standing in front of their fridge who doesn't know what to cook with what's already there.
+MealPlanner AI is a Streamlit web app that suggests recipes based on your mood, available ingredients, kitchen tools, and available cooking time. Instead of searching through recipes that may not match what you have, the app creates practical meal ideas using the resources already in your kitchen, helping reduce decision fatigue and food waste.
 
 **Live app:** https://mealplanner-ai.streamlit.app/
 
@@ -12,7 +12,9 @@ Many people struggle to decide what to cook using the ingredients, equipment, an
 
 ## Technology Stack
 
-Python, Streamlit, google-genai, python-dotenv, Google Gemini API (`gemini-flash-latest`).
+Python, Streamlit, Google Gemini API (`google-genai`), python-dotenv.
+
+**CI/CD**: GitHub Actions (ruff lint + import checks + deployed-app smoke test) and Streamlit Community Cloud (hosting, auto-redeploy on push to `main`).
 
 ## Setup Instructions
 
@@ -49,13 +51,13 @@ Python, Streamlit, google-genai, python-dotenv, Google Gemini API (`gemini-flash
 
 ## Known Limitations
 
-- The app trusts the model's JSON output; if Gemini returns malformed JSON or an unexpected schema, the request fails and the user just sees a generic error with no fallback or retry.
-- There's no validation of ingredient/tool input or nutritional awareness (allergies, dietary restrictions, calorie goals), so suggestions can be impractical or unsuitable for some users.
+- The app relies on the LLM to return valid JSON. If the response is malformed, a generic error message is displayed without an automatic retry. If the response is valid JSON but missing expected fields (e.g. the `"recipes"` list) the app does not display any suggestions and provides no specific feedback to the user.
+- The app does not validate ingredient or kitchen tool inputs, nor does it account for dietary preferences, allergies, nutritional requirements, or calorie goals. As a result, some generated recipes may be impractical or unsuitable for individual users.
 
 ## Future Improvements
 
-- Let users specify dietary restrictions and allergies, and have the model respect them in both suggestions and steps.
-- Persist favorite recipes and past sessions (e.g. to a local file or database) so users can revisit meals they've cooked before.
+- Support dietary preferences, allergies, and nutritional goals by allowing users to specify these constraints and ensuring all generated recipe suggestions and cooking instructions adhere to them.
+- Add persistent storage for favorite recipes and cooking history (e.g., using a local database or cloud storage), enabling users to revisit, organize, and reuse previously generated meals.
 
 ## CI/CD
 

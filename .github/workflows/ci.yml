@@ -24,7 +24,7 @@ jobs:
           pip install ruff
 
       - name: Lint (syntax errors and undefined names)
-        run: ruff check . --select=E9,F
+        run: ruff check .
 
       - name: Verify all modules import cleanly
         run: python -c "import app, analyzer, llm, parse, prompts, main"

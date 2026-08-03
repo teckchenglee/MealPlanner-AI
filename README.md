@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/teckchenglee/MealPlanner-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/teckchenglee/MealPlanner-AI/actions/workflows/ci.yml)
 
-MealPlanner AI is a Streamlit web app that suggests recipes based on your mood, available ingredients, kitchen tools, and available cooking time. Instead of searching through recipes that may not match what you have, the app creates practical meal ideas using the resources already in your kitchen, helping reduce decision fatigue and food waste.
+MealPlanner AI is a Streamlit web app that suggests recipes based on your mood, available ingredients, kitchen tools, and available cooking time. Instead of searching through recipes that may not match what you have, the app creates practical meal ideas using the resources already in your kitchen, helping reduce decision fatigue and food waste. A sidebar keeps a history of every batch of suggestions generated during the session, so you can switch back to an earlier set at any time.
 
 **Live app:** https://mealplanner-ai.streamlit.app/
 
@@ -49,6 +49,11 @@ Python, Streamlit, Google Gemini API (`google-genai`), python-dotenv.
 - Input: Mood = "something light and refreshing", Ingredients = "chicken breast, tomato, cucumber, lettuce", Tools = "stovetop, microwave", Time limit = 20 minutes, then a chat refinement of "give me other options"
 - Output: The app returns 3 new recipe suggestions that avoid repeating the previous set (e.g. a chicken salad, a stir-fry, a wrap), still fitting the 20-minute limit.
 
+**Example 3**
+
+- Input: After generating suggestions for both examples above, the user clicks the "1. eggs, rice, spinach, garlic" entry in the sidebar History list.
+- Output: The app switches back to displaying the first batch of 3 recipes (the comforting egg-and-rice suggestions), without needing to re-enter the original inputs or call Gemini again.
+
 ## CI/CD
 
 Every push and pull request to `main` runs the GitHub Actions workflow in `.github/workflows/ci.yml`, which lints the code and verifies all modules import cleanly. On pushes to `main`, a second job then does a smoke check — it curls the live app to confirm it's reachable (Streamlit Community Cloud handles the actual redeploy itself, so this is a health check, not a deploy trigger).
@@ -71,4 +76,4 @@ The app is deployed via [Streamlit Community Cloud](https://share.streamlit.io) 
 ## Future Improvements
 
 - Support dietary preferences, allergies, and nutritional goals by allowing users to specify these constraints and ensuring all generated recipe suggestions and cooking instructions adhere to them.
-- Add persistent storage for favorite recipes and cooking history (e.g., using a local database or cloud storage), enabling users to revisit, organize, and reuse previously generated meals.
+- Persist the sidebar history beyond the current session (e.g. to a local file or database) and let users mark favorites, so history survives a page refresh or app restart.

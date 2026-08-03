@@ -16,10 +16,40 @@ def init_session_state():
         "tools": "",
         "time_limit": 30,
         "chat_history": [],
+        "history": [],
     }
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
+
+def add_to_history(recipes, mood, ingredients, tools, time_limit):
+    """Save a batch of recipe suggestions so it can be revisited later from the sidebar."""
+    st.session_state.history.append({
+        "recipes": recipes,
+        "mood": mood,
+        "ingredients": ingredients,
+        "tools": tools,
+        "time_limit": time_limit,
+    })
+
+
+def render_sidebar():
+    """Render a sidebar listing past suggestion batches, letting the user switch back to any of them."""
+    st.sidebar.subheader("History")
+    if not st.session_state.history:
+        st.sidebar.caption("No recipes generated yet.")
+        return
+    for index, entry in reversed(list(enumerate(st.session_state.history))):
+        label = f"{index + 1}. {entry['ingredients'][:30] or 'No ingredients listed'}"
+        if st.sidebar.button(label, key=f"history_{index}"):
+            st.session_state.suggestions = entry["recipes"]
+            st.session_state.mood = entry["mood"]
+            st.session_state.ingredients = entry["ingredients"]
+            st.session_state.tools = entry["tools"]
+            st.session_state.time_limit = entry["time_limit"]
+            st.session_state.stage = "suggestions"
+            st.rerun()
 
 
 def render_input_stage(client):
@@ -45,6 +75,7 @@ def render_input_stage(client):
             st.session_state.time_limit = time_limit
             st.session_state.suggestions = recipes
             st.session_state.stage = "suggestions"
+            add_to_history(recipes, mood, ingredients, tools, time_limit)
             st.rerun()
 
 
@@ -94,6 +125,13 @@ def render_suggestions_stage(client):
             )
         if recipes:
             st.session_state.suggestions = recipes
+            add_to_history(
+                recipes,
+                st.session_state.mood,
+                st.session_state.ingredients,
+                st.session_state.tools,
+                st.session_state.time_limit,
+            )
             st.rerun()
 
 
@@ -142,6 +180,7 @@ def main():
 
     init_session_state()
     client = build_client()
+    render_sidebar()
 
     if st.session_state.stage == "input":
         render_input_stage(client)

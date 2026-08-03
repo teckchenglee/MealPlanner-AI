@@ -4,6 +4,7 @@ from llm import generate_json
 from parse import parse_json_response
 from prompts import build_steps_prompt, build_suggestions_prompt
 
+
 def get_recipe_suggestions(client, mood, ingredients, tools, time_limit, extra_requests=None, previous_recipes=None):
     """Ask Gemini for 3 recipe suggestions, optionally refined by follow-up chat requests; returns a list or None on failure."""
     prompt = build_suggestions_prompt(mood, ingredients, tools, time_limit, extra_requests, previous_recipes)

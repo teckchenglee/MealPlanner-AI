@@ -1,5 +1,7 @@
 # MealPlanner AI
 
+[![CI](https://github.com/teckchenglee/MealPlanner-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/teckchenglee/MealPlanner-AI/actions/workflows/ci.yml)
+
 MealPlanner AI is a Streamlit web app that suggests recipes based on your mood, the ingredients and tools you have on hand, and how much time you've got. It's for anyone standing in front of their fridge who doesn't know what to cook with what's already there.
 
 ## Problem Statement
@@ -13,15 +15,20 @@ Python, Streamlit, google-genai, python-dotenv, Google Gemini API (`gemini-flash
 ## Setup Instructions
 
 1. Clone the repository.
-2. Install dependencies:
+2. Create and activate a virtual environment:
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate   # on Windows: .venv\Scripts\activate
+   ```
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Copy `.env.example` to `.env` and fill in your Gemini API key:
+4. Copy `.env.example` to `.env` and fill in your Gemini API key:
    ```
    GEMINI_API_KEY="your-api-key-here"
    ```
-4. Run the application:
+5. Run the application:
    ```bash
    streamlit run main.py
    ```
@@ -47,3 +54,17 @@ Python, Streamlit, google-genai, python-dotenv, Google Gemini API (`gemini-flash
 
 - Let users specify dietary restrictions and allergies, and have the model respect them in both suggestions and steps.
 - Persist favorite recipes and past sessions (e.g. to a local file or database) so users can revisit meals they've cooked before.
+
+## CI/CD
+
+Every push and pull request to `main` runs the GitHub Actions workflow in `.github/workflows/ci.yml`, which lints the code and verifies all modules import cleanly.
+
+The app is deployed via [Streamlit Community Cloud](https://share.streamlit.io), which auto-redeploys on every push to `main`:
+
+1. Sign in to share.streamlit.io with GitHub.
+2. Click "New app", select this repository, branch `main`, and main file `app.py`.
+3. Under "Advanced settings" → "Secrets", add:
+   ```
+   GEMINI_API_KEY = "your-api-key-here"
+   ```
+4. Deploy. Future pushes to `main` redeploy automatically.

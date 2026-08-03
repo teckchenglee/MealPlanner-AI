@@ -49,16 +49,6 @@ Python, Streamlit, Google Gemini API (`google-genai`), python-dotenv.
 - Input: Mood = "something light and refreshing", Ingredients = "chicken breast, tomato, cucumber, lettuce", Tools = "stovetop, microwave", Time limit = 20 minutes, then a chat refinement of "give me other options"
 - Output: The app returns 3 new recipe suggestions that avoid repeating the previous set (e.g. a chicken salad, a stir-fry, a wrap), still fitting the 20-minute limit.
 
-## Known Limitations
-
-- The app relies on the LLM to return valid JSON. If the response is malformed, a generic error message is displayed without an automatic retry. If the response is valid JSON but missing expected fields (e.g. the `"recipes"` list) the app does not display any suggestions and provides no specific feedback to the user.
-- The app does not validate ingredient or kitchen tool inputs, nor does it account for dietary preferences, allergies, nutritional requirements, or calorie goals. As a result, some generated recipes may be impractical or unsuitable for individual users.
-
-## Future Improvements
-
-- Support dietary preferences, allergies, and nutritional goals by allowing users to specify these constraints and ensuring all generated recipe suggestions and cooking instructions adhere to them.
-- Add persistent storage for favorite recipes and cooking history (e.g., using a local database or cloud storage), enabling users to revisit, organize, and reuse previously generated meals.
-
 ## CI/CD
 
 Every push and pull request to `main` runs the GitHub Actions workflow in `.github/workflows/ci.yml`, which lints the code and verifies all modules import cleanly. On pushes to `main`, a second job then does a smoke check — it curls the live app to confirm it's reachable (Streamlit Community Cloud handles the actual redeploy itself, so this is a health check, not a deploy trigger).
@@ -72,3 +62,13 @@ The app is deployed via [Streamlit Community Cloud](https://share.streamlit.io) 
    GEMINI_API_KEY = "your-api-key-here"
    ```
 4. Deploy. Future pushes to `main` redeploy automatically.
+
+## Known Limitations
+
+- The app relies on the LLM to return valid JSON. If the response is malformed, a generic error message is displayed without an automatic retry. If the response is valid JSON but missing expected fields (e.g. the `"recipes"` list) the app does not display any suggestions and provides no specific feedback to the user.
+- The app does not validate ingredient or kitchen tool inputs, nor does it account for dietary preferences, allergies, nutritional requirements, or calorie goals. As a result, some generated recipes may be impractical or unsuitable for individual users.
+
+## Future Improvements
+
+- Support dietary preferences, allergies, and nutritional goals by allowing users to specify these constraints and ensuring all generated recipe suggestions and cooking instructions adhere to them.
+- Add persistent storage for favorite recipes and cooking history (e.g., using a local database or cloud storage), enabling users to revisit, organize, and reuse previously generated meals.

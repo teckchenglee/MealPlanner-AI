@@ -56,7 +56,7 @@ Every push and pull request to `main` runs the GitHub Actions workflow in `.gith
 The app is deployed via [Streamlit Community Cloud](https://share.streamlit.io) at **https://mealplanner-ai.streamlit.app/**, which auto-redeploys on every push to `main`:
 
 1. Sign in to share.streamlit.io with GitHub.
-2. Click "New app", select this repository, branch `main`, and main file `app.py`.
+2. Click "New app", select this repository, branch `main`, and main file `main.py`.
 3. Under "Advanced settings" → "Secrets", add:
    ```
    GEMINI_API_KEY = "your-api-key-here"

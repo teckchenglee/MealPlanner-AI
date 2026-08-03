@@ -23,7 +23,7 @@ Python, Streamlit, google-genai, python-dotenv, Google Gemini API (`gemini-flash
    ```
 4. Run the application:
    ```bash
-   streamlit run app.py
+   streamlit run main.py
    ```
 
 ## Usage Examples

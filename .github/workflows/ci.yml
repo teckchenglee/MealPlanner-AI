@@ -21,13 +21,16 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install ruff
+          pip install ruff pytest
 
       - name: Lint (syntax errors and undefined names)
         run: ruff check .
 
       - name: Verify all modules import cleanly
         run: python -c "import app, analyzer, llm, parse, prompts, main"
+
+      - name: Run tests
+        run: python -m pytest -q
 
   smoke-check:
     needs: lint-and-check

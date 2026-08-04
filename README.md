@@ -14,7 +14,7 @@ Many people struggle to decide what to cook using the ingredients, equipment, an
 
 Python, Streamlit, Google Gemini API (`google-genai`), python-dotenv.
 
-**CI/CD**: GitHub Actions (ruff lint + import checks + deployed-app smoke test) and Streamlit Community Cloud (hosting, auto-redeploy on push to `main`).
+**CI/CD**: GitHub Actions (ruff lint + import checks + pytest + deployed-app smoke test) and Streamlit Community Cloud (hosting, auto-redeploy on push to `main`).
 
 ## Setup Instructions
 
@@ -56,7 +56,7 @@ Python, Streamlit, Google Gemini API (`google-genai`), python-dotenv.
 
 ## CI/CD
 
-Every push and pull request to `main` runs the GitHub Actions workflow in `.github/workflows/ci.yml`, which lints the code and verifies all modules import cleanly. On pushes to `main`, a second job then does a smoke check — it curls the live app to confirm it's reachable (Streamlit Community Cloud handles the actual redeploy itself, so this is a health check, not a deploy trigger).
+Every push and pull request to `main` runs the GitHub Actions workflow in `.github/workflows/ci.yml`, which lints the code, verifies all modules import cleanly, and runs the `tests/` suite (pytest) covering JSON parsing, prompt building, and the recipe-lookup functions — including edge cases like malformed or unexpected-shape LLM responses. On pushes to `main`, a second job then does a smoke check — it curls the live app to confirm it's reachable (Streamlit Community Cloud handles the actual redeploy itself, so this is a health check, not a deploy trigger).
 
 The app is deployed via [Streamlit Community Cloud](https://share.streamlit.io) at **https://mealplanner-ai.streamlit.app/**, which auto-redeploys on every push to `main`:
 

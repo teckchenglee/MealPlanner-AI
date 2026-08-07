@@ -26,6 +26,7 @@ def generate_json(client, prompt):
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
             response_mime_type="application/json",
+            temperature=0.7,
         ),
     )
     return response.text
